@@ -1,6 +1,6 @@
-from seleniumbase import Driver
-from selenium.webdriver.common.by import By
 import time
+from selenium.webdriver.common.by import By
+from seleniumbase import Driver
 
 
 def extract_urls(driver, amount):
@@ -31,8 +31,6 @@ def extract_urls(driver, amount):
 
 with Driver(uc=True, headless=False) as driver:
     urls = extract_urls(driver, 2000)
-    print(urls)
-    print(len(urls))
 
 with open('./extracted_data/leboncoin_urls.txt', 'w') as fp:
     fp.write('\n'.join(str(urls) for urls in urls))
