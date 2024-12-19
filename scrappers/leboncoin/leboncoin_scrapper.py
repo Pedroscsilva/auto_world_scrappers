@@ -87,4 +87,4 @@ with Driver(uc=True, headless=False, size='1366,768') as driver:
             ignore_index=True
         )
 
-companies_df.to_csv('extracted_data/companies.csv')
+companies_df.to_csv('extracted_data/leboncoin/companies.csv')

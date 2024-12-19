@@ -97,5 +97,5 @@ with Firefox(options) as driver:
     search_company(driver=driver, company='WKDA France')
     data = assemble_data(driver)
 
-with open('extracted_data/societe_data.json', 'w') as fp:
+with open('extracted_data/societe/societe_data.json', 'w') as fp:
     json.dump(data, fp, ensure_ascii=False)
