@@ -73,7 +73,7 @@ def extract_data(driver, url):
     return data
 
 
-with open('./extracted_data/leboncoin_urls.txt', 'r') as file:
+with open('extracted_data/leboncoin_urls.txt', 'r') as file:
     urls = list(file)
     url_list = [url.rstrip('\n') for url in urls]
 
@@ -87,4 +87,4 @@ with Driver(uc=True, headless=False, size='1366,768') as driver:
             ignore_index=True
         )
 
-companies_df.to_csv('./extracted_data/companies.csv')
+companies_df.to_csv('extracted_data/companies.csv')

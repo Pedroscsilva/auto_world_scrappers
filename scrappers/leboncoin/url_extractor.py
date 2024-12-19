@@ -32,5 +32,5 @@ def extract_urls(driver, amount):
 with Driver(uc=True, headless=False) as driver:
     urls = extract_urls(driver, 2000)
 
-with open('./extracted_data/leboncoin_urls.txt', 'w') as fp:
+with open('extracted_data/leboncoin_urls.txt', 'w') as fp:
     fp.write('\n'.join(str(urls) for urls in urls))
