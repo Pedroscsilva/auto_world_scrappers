@@ -1,6 +1,7 @@
 from seleniumbase import Driver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import ElementClickInterceptedException
 import pandas as pd
 
 companies_df = pd.DataFrame(
@@ -13,9 +14,11 @@ def get_text(driver, by, find_string):
     '''
     Returns the inner text of a given element
     '''
-
-    element = driver.find_element(by=by, value=find_string)
-    return element.text
+    try:
+        element = driver.find_element(by=by, value=find_string)
+        return element.text
+    except NoSuchElementException:
+        return None
 
 
 def click_btn_if_exists(driver):
@@ -29,7 +32,7 @@ def click_btn_if_exists(driver):
             '//button[text()="Voir plus"]'
         )
         voir_plus_button.click()
-    except NoSuchElementException:
+    except (NoSuchElementException, ElementClickInterceptedException):
         pass
 
 
@@ -38,7 +41,7 @@ def extract_data(driver, url):
     Extracts the data of a page from a given URL of leboncoin announcers
     '''
     # Connects to the website and ensures it will not be detected
-    driver.uc_open_with_reconnect(url, reconnect_time=7)
+    driver.uc_open_with_reconnect(url, reconnect_time=3)
     click_btn_if_exists(driver)
 
     # Paths and classes. Might change.
@@ -75,9 +78,10 @@ with open('./extracted_data/leboncoin_urls.txt', 'r') as file:
     url_list = [url.rstrip('\n') for url in urls]
 
 
-with Driver(uc=True, headless=False) as driver:
+with Driver(uc=True, headless=False, size='1366,768') as driver:
     for url in url_list:
         data = extract_data(driver, url)
+        print(data['name'])
         companies_df = pd.concat(
             [companies_df, pd.DataFrame(data, index=[0])],
             ignore_index=True
